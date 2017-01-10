@@ -15,16 +15,18 @@
 import webapp2
 
 form = """
-<form action="http://google.com/search">
-	<input name="q">
-	<input type="submit">
-</form>
-<form action="/testform">
-	<input name="q">
-	<input type="submit">
-</form>
-<form action="/testform2" method="post">
-	<input name="q">
+<form action="/" method="post">
+	What is your birth date?
+	<br>
+	<label>Day
+		<input type="text" name="day">
+	</label>
+	<label>Month
+		<input type="text" name="month">
+	</label>
+	<label>Year
+		<input type="text" name="year">
+	</label>
 	<input type="submit">
 </form>
 """
@@ -34,19 +36,10 @@ class MainPage(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html'
         self.response.write(form)
 
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        q = self.request.get("q")
-        self.response.out.write(q)
-
-class TestHandler2(webapp2.RequestHandler):
     def post(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write(self.request) # write the http request
+        self.response.out.write("Good Day")
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage), # MainPage class handles this request
-    ('/testform', TestHandler),  # TestHandler class handles this request
-     ('/testform2', TestHandler2), # TestHandler2 class handles this request
+    ('/', MainPage)
 ], debug=True)
 
