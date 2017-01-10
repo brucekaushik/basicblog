@@ -40,7 +40,7 @@ class TestHandler(webapp2.RequestHandler):
         self.response.out.write(q)
 
 class TestHandler2(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(self.request) # write the http request
 
