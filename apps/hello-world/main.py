@@ -23,7 +23,7 @@ form = """
 	<input name="q">
 	<input type="submit">
 </form>
-<form action="/testform2">
+<form action="/testform2" method="post">
 	<input name="q">
 	<input type="submit">
 </form>
