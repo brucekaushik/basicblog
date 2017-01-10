@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import webapp2
+import handyfunctions
 
 form = """
 <form action="/" method="post">
@@ -37,7 +38,15 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(form)
 
     def post(self):
-        self.response.out.write("Good Day")
+        user_day = handyfunctions.valid_day(self.request.get('day'))
+        user_month = handyfunctions.valid_month_short(self.request.get('month'))
+        user_year = handyfunctions.valid_year(self.request.get('year'))
+
+        if not (user_day and user_month and user_year):
+        	return self.response.out.write(form)
+    	else:
+    		return self.response.out.write("Perfect day to be born")
+
 
 app = webapp2.WSGIApplication([
     ('/', MainPage)
