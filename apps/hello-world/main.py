@@ -20,13 +20,13 @@ form = """
 	What is your birth date?
 	<br>
 	<label>Day
-		<input type="text" name="day">
+		<input type="text" name="day" value="%(day)s">
 	</label>
 	<label>Month
-		<input type="text" name="month">
+		<input type="text" name="month" value="%(month)s">
 	</label>
 	<label>Year
-		<input type="text" name="year">
+		<input type="text" name="year" value="%(year)s">
 	</label>
 	<div style="color: red">%(error)s</div>
 	<input type="submit">
@@ -35,8 +35,8 @@ form = """
 
 class MainPage(webapp2.RequestHandler):
 
-	def write_form(self, error=""):
-		return self.response.out.write(form % {"error": error})
+	def write_form(self, error="", day="", month="", year=""):
+		return self.response.out.write(form % {"error": error, "day": day, "month": month, "year": year})
 
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
@@ -48,7 +48,7 @@ class MainPage(webapp2.RequestHandler):
 		user_year = handyfunctions.valid_year(self.request.get('year'))
 
 		if not (user_day and user_month and user_year):
-			self.write_form("that's not a valid day is it???")
+			self.write_form("that's not a valid day is it???", user_day, user_month, user_year)
 		else:
 			return self.response.out.write("Perfect day to be born")
 
