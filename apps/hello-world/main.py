@@ -47,6 +47,10 @@ class MainPage(webapp2.RequestHandler):
 		user_month = self.request.get('month')
 		user_year = self.request.get('year')
 
+		user_day = handyfunctions.escape_html(user_day)
+		user_month = handyfunctions.escape_html(user_month)
+		user_year = handyfunctions.escape_html(user_year)
+
 		day = handyfunctions.valid_day(user_day)
 		month = handyfunctions.valid_month_short(user_month)
 		year = handyfunctions.valid_year(user_year)

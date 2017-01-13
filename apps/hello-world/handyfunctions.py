@@ -1,3 +1,5 @@
+import cgi
+
 def valid_day(day):
   if day and day.isdigit():
     day = int(day)
@@ -38,3 +40,6 @@ def valid_year(year):
     year = int(year)
     if year > 1900 and year < 2017:
       return year
+
+def escape_html(s):
+  return cgi.escape(s, quote=True)
