@@ -58,10 +58,18 @@ class MainPage(webapp2.RequestHandler):
 		if not (day and month and year):
 			self.write_form("that's not a valid day is it???", user_day, user_month, user_year)
 		else:
-			return self.response.out.write("Perfect day to be born")
+			self.redirect("/thanks")
+
+
+class ThanksHandler(webapp2.RequestHandler):
+
+	def get(self):
+		return self.response.out.write("Perfect day to be born")
+
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage)
+    ('/', MainPage),
+    ('/thanks', ThanksHandler)
 ], debug=True)
 
