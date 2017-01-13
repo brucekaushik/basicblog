@@ -28,24 +28,29 @@ form = """
 	<label>Year
 		<input type="text" name="year">
 	</label>
+	<div style="color: red">%(error)s</div>
 	<input type="submit">
 </form>
 """
 
 class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.write(form)
 
-    def post(self):
-        user_day = handyfunctions.valid_day(self.request.get('day'))
-        user_month = handyfunctions.valid_month_short(self.request.get('month'))
-        user_year = handyfunctions.valid_year(self.request.get('year'))
+	def write_form(self, error=""):
+		return self.response.out.write(form % {"error": error})
 
-        if not (user_day and user_month and user_year):
-        	return self.response.out.write(form)
-    	else:
-    		return self.response.out.write("Perfect day to be born")
+	def get(self):
+		self.response.headers['Content-Type'] = 'text/html'
+		self.write_form()
+
+	def post(self):
+		user_day = handyfunctions.valid_day(self.request.get('day'))
+		user_month = handyfunctions.valid_month_short(self.request.get('month'))
+		user_year = handyfunctions.valid_year(self.request.get('year'))
+
+		if not (user_day and user_month and user_year):
+			self.write_form("that's not a valid day is it???")
+		else:
+			return self.response.out.write("Perfect day to be born")
 
 
 app = webapp2.WSGIApplication([
