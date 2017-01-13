@@ -43,11 +43,15 @@ class MainPage(webapp2.RequestHandler):
 		self.write_form()
 
 	def post(self):
-		user_day = handyfunctions.valid_day(self.request.get('day'))
-		user_month = handyfunctions.valid_month_short(self.request.get('month'))
-		user_year = handyfunctions.valid_year(self.request.get('year'))
+		user_day = self.request.get('day')
+		user_month = self.request.get('month')
+		user_year = self.request.get('year')
 
-		if not (user_day and user_month and user_year):
+		day = handyfunctions.valid_day(user_day)
+		month = handyfunctions.valid_month_short(user_month)
+		year = handyfunctions.valid_year(user_year)
+
+		if not (day and month and year):
 			self.write_form("that's not a valid day is it???", user_day, user_month, user_year)
 		else:
 			return self.response.out.write("Perfect day to be born")
