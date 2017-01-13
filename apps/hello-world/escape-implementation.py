@@ -22,3 +22,16 @@ print escape_html('>')
 print escape_html('<')
 print escape_html('"')
 print escape_html("&")
+
+
+
+import cgi
+
+def escape_html_cgi(s):
+	return cgi.escape(s, quote=True)
+    
+
+print escape_html_cgi('>')
+print escape_html_cgi('<')
+print escape_html_cgi('"')
+print escape_html_cgi("&")
