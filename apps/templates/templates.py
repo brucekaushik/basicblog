@@ -15,6 +15,14 @@
 import os
 import webapp2
 
+form_html = """
+<form action="/">
+	<h2>Add a Food</h2>
+	<input type="text" name="food" value="">
+	<input type="submit">
+</form>
+"""
+
 class Handler(webapp2.RequestHandler):
 	def write(self, *a, **kw):
 		return self.response.out.write(*a, **kw)
@@ -22,7 +30,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler): # inherit MainPage from Handler
 	def get(self):
-		self.write("hello udacity")
+		self.write(form_html)
 
 
 app = webapp2.WSGIApplication([
