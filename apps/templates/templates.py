@@ -47,6 +47,21 @@ class Handler(webapp2.RequestHandler):
 	def write(self, *a, **kw):
 		return self.response.out.write(*a, **kw)
 
+	def render_str(self, template, **params):
+		'''
+		render query string
+		'''
+
+		t = jinja_env.get_template(template)
+		return t.render(params)
+
+	def render(self, template, **kw):
+		'''
+		render form using the template
+		'''
+		
+		self.write(self.render_str(template, **kw))
+
 
 class MainPage(Handler): # inherit MainPage from Handler
 	def get(self):
