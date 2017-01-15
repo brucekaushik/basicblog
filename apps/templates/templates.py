@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import jinja2
 import webapp2
 
 form_html = """
@@ -37,7 +38,10 @@ shopping_list_html = """
 </ul>
 """
 
-
+# build path to templates directory
+template_dir = os.path.join(os.path.dirname(__file__),"templates")
+# initialize jinja environment
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir))
 
 class Handler(webapp2.RequestHandler):
 	def write(self, *a, **kw):
