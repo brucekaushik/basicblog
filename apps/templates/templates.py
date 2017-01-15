@@ -16,15 +16,6 @@ import os
 import jinja2
 import webapp2
 
-form_html = """
-<form action="/">
-	<h2>Add a Food</h2>
-	<input type="text" name="food" value="">
-	%s
-	<input type="submit">
-</form>
-"""
-
 hidden_html = """
 <input type="hidden" name="food" value="%s">
 """
@@ -65,6 +56,9 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler): # inherit MainPage from Handler
 	def get(self):
+		self.render("shopping_list.html");
+
+		'''
 		output = form_html
 		output_hidden = ""
 
@@ -82,6 +76,7 @@ class MainPage(Handler): # inherit MainPage from Handler
 		output = output % output_hidden
 		
 		self.write(output)
+		'''
 
 app = webapp2.WSGIApplication([
     ('/', MainPage)
