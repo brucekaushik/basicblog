@@ -19,7 +19,7 @@ import webapp2
 # build path to templates directory
 template_dir = os.path.join(os.path.dirname(__file__),"templates")
 # initialize jinja environment
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir))
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
 
 class Handler(webapp2.RequestHandler):
 	def write(self, *a, **kw):
