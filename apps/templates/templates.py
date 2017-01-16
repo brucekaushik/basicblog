@@ -56,7 +56,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler): # inherit MainPage from Handler
 	def get(self):
-		self.render("shopping_list.html");
+		self.render("shopping_list.html",name='kaushik');
 
 		'''
 		output = form_html
