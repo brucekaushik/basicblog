@@ -31,14 +31,24 @@ class BaseHandler(webapp2.RequestHandler):
         return t.render(params)
 
     def render(self, template, **kw):
-        self.response.out.write(render_str(template, **kw))
+        self.response.out.write(self.render_str(template, **kw))
 
 class MainPage(BaseHandler):
     def get(self):
-        self.write('asciichan!!')
+        self.render('front.html')
+
+    def post(self):
+        title = self.request.get('title')
+        art = self.request.get('art')
+
+        if title and art:
+            self.write('thanks!')
+        else:
+            error = "We need both title and art"
+            self.render('front.html', error = error)
 		
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage),
+    ('/', MainPage)
 ], debug=True)
 
