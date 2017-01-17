@@ -37,7 +37,9 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class Art(db.Model):
-    ## rest of the definition
+    title = db.StringProperty(required = True)
+    art = db.TextProperty(required = True)
+    created = db.DateTimeProperty(auto_now_add = True)
         
 
 class MainPage(BaseHandler):
