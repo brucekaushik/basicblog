@@ -54,7 +54,10 @@ class MainPage(BaseHandler):
         art = self.request.get('art')
 
         if title and art:
-            self.write('thanks!')
+            a = Art(title = title, art = art)
+            a.put()
+
+            self.redirect('/')
         else:
             error = "We need both title and art"
             self.render_front(title, art, error) # we don't have to do title=title etc everytime
