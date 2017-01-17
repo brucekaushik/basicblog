@@ -16,6 +16,8 @@ import os
 import jinja2
 import webapp2
 
+from google.appengine.ext import db
+
 # build path to templates directory
 template_dir = os.path.join(os.path.dirname(__file__),"templates")
 # initialize jinja environment
@@ -32,6 +34,11 @@ class BaseHandler(webapp2.RequestHandler):
 
     def render(self, template, **kw):
         self.response.out.write(self.render_str(template, **kw))
+
+
+class Art(db.Model):
+    ## rest of the definition
+        
 
 class MainPage(BaseHandler):
     def render_front(self, title="", art="", error=""):
