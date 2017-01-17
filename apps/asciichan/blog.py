@@ -34,8 +34,11 @@ class BaseHandler(webapp2.RequestHandler):
         self.response.out.write(self.render_str(template, **kw))
 
 class MainPage(BaseHandler):
+    def render_front(self, title="", art="", error=""):
+        self.render("front.html", title=title, art=art, error=error)
+
     def get(self):
-        self.render('front.html')
+        self.render_front()
 
     def post(self):
         title = self.request.get('title')
@@ -45,7 +48,7 @@ class MainPage(BaseHandler):
             self.write('thanks!')
         else:
             error = "We need both title and art"
-            self.render('front.html', error = error)
+            self.render_front(title, art, error) # we don't have to do title=title etc everytime
 		
 
 app = webapp2.WSGIApplication([
