@@ -139,11 +139,27 @@ class NewPost(BlogHandler):
             self.render("newpost.html", subject=subject, content=content, error=error)
 
 
+class CookieTest(BlogHandler):
+    
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        visits = self.request.cookies.get('visits', 0)
+        if visits.isdigit():
+            visits = int(visits) + 1
+        else:
+            visits = 0
+        self.response.headers.add_header('Set-Cookie','visits=%s' % visits) 
+        # we are using add_header sytax as we don't want to override the previosly set 'Content-Type=text/plain' header
+        self.write("You have been here %s times!" % visits)
+        
+
+
 # define handlers
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/blog/?', BlogFront),
                                ('/blog/([0-9]+)', PostPage),
                                ('/blog/newpost', NewPost),
+                               ('/cookietest', CookieTest),
                                ],
                               debug=True)
 
