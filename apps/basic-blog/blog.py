@@ -15,6 +15,7 @@
 import os
 import jinja2
 import webapp2
+import hashlib
 
 from google.appengine.ext import db
 
@@ -34,6 +35,18 @@ class BaseHandler(webapp2.RequestHandler):
 
     def render(self, template, **kw):
         self.response.out.write(self.render_str(template, **kw))
+
+    def hash_str(self, cookie_string):
+        cookie_string = str(cookie_string)
+        return hashlib.md5(cookie_string).hexdigest()
+
+    def make_secure_cookie(self, cookie_string):
+        return "%s|%s" % (cookie_string, self.hash_str(cookie_string))
+
+    def check_secure_cookie(self, cookie_string):
+        cookie_string_val = cookie_string.split("|")[0]
+        if cookie_string == self.make_secure_cookie(cookie_string_val):
+            return cookie_string_val
 
 
 class BlogHandler(BaseHandler):
@@ -143,12 +156,19 @@ class CookieTest(BlogHandler):
     
     def get(self):
         self.response.headers['Content-Type'] = 'text/plain'
-        visits = self.request.cookies.get('visits', 0)
-        if visits.isdigit():
-            visits = int(visits) + 1
-        else:
-            visits = 0
-        self.response.headers.add_header('Set-Cookie','visits=%s' % visits) 
+        visits = 0
+        visit_cookie_str = self.request.cookies.get('visits')
+        visit_cookie_str = str(visit_cookie_str)
+
+        if visit_cookie_str:
+            cookie_val = self.check_secure_cookie(visit_cookie_str)
+            if cookie_val:
+                visits = int(cookie_val)
+
+        visits += 1
+        visits_cookie = self.make_secure_cookie(visits)
+
+        self.response.headers.add_header('Set-Cookie','visits=%s' % visits_cookie) 
         # we are using add_header sytax as we don't want to override the previosly set 'Content-Type=text/plain' header
         self.write("You have been here %s times!" % visits)
         
