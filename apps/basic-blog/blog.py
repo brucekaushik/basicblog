@@ -16,6 +16,7 @@ import os
 import jinja2
 import webapp2
 import hashlib
+import hmac
 
 from google.appengine.ext import db
 
@@ -23,6 +24,9 @@ from google.appengine.ext import db
 template_dir = os.path.join(os.path.dirname(__file__),"templates")
 # initialize jinja environment
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
+
+# define a secret key
+SECRET = 'iamsosecret'
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -38,7 +42,8 @@ class BaseHandler(webapp2.RequestHandler):
 
     def hash_str(self, cookie_string):
         cookie_string = str(cookie_string)
-        return hashlib.md5(cookie_string).hexdigest()
+        # return hashlib.md5(cookie_string).hexdigest()
+        return hmac.new(SECRET, cookie_string).hexdigest()
 
     def make_secure_cookie(self, cookie_string):
         return "%s|%s" % (cookie_string, self.hash_str(cookie_string))
