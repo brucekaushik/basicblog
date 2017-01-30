@@ -17,6 +17,8 @@ import jinja2
 import webapp2
 import hashlib
 import hmac
+import random
+import string
 
 from google.appengine.ext import db
 
@@ -44,6 +46,10 @@ class BaseHandler(webapp2.RequestHandler):
         cookie_string = str(cookie_string)
         # return hashlib.md5(cookie_string).hexdigest()
         return hmac.new(SECRET, cookie_string).hexdigest()
+
+    def make_salt(self):
+        emptysting = ''
+        return emptysting.join(random.choice(string.letters) for x in xrange(5)) 
 
     def make_secure_cookie(self, cookie_string):
         return "%s|%s" % (cookie_string, self.hash_str(cookie_string))
