@@ -1,8 +1,12 @@
-# Movie Trailer Website
+# Basic Blog Project
 
 Done as a project for Udacity's "Full Stack Web Developer" Nanodegree .
 
   - The main aim of the project is to build a basic blog
+
+Live Version At:
+
+	https://basic-blog-162423.appspot.com/
 
 ### Technologies Used
 
@@ -20,7 +24,7 @@ Done as a project for Udacity's "Full Stack Web Developer" Nanodegree .
 
 ```sh
 $ git clone [git-repo-url] basicblog
-$ cd basicblog
+$ cd basicblog/apps/blog-project
 $ dev_appserver.py .
 ```
 
